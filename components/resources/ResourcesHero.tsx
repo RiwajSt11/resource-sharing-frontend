@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import image1 from "@/public/Landing/image1.svg";
 import image2 from "@/public/Landing/image2.svg";
