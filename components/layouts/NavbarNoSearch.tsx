@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import HCKlogo from "@/public/Landing/HCKLogo.svg";
@@ -48,9 +48,8 @@ export const NavbarNoSearch = () => {
           >
             Home
           </Link>
-          <Link
-            href=""
-            className="text-white text-sm flex gap-2.75 items-center justify-center transition-colors duration-300 hover:text-primary"
+          <div
+            className="text-white text-sm flex gap-2.75 items-center justify-center cursor-pointer transition-colors duration-300 hover:text-primary"
             onClick={() => setShow(!show)}
           >
             <span>Resources</span>
@@ -59,13 +58,10 @@ export const NavbarNoSearch = () => {
               alt="arrow"
               className={`h-2 w-1.75 transition-transform duration-300 ${show ? "rotate-90" : "rotate-0"}`}
             />
-          </Link>
-          <Link
-            href=""
-            className="text-white text-sm transition-colors duration-300 hover:text-primary"
-          >
+          </div>
+          <div className="text-white text-sm cursor-pointer transition-colors duration-300 hover:text-primary">
             Search
-          </Link>
+          </div>
         </div>
         <div className="flex items-center">
           <button
