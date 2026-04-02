@@ -62,7 +62,6 @@ function ResourcesLanding() {
             <h1 className="text-[24px] md:text-[32.25px] text-black/90 font-semibold tracking-tight flex gap-1.5 ml-0.5 md:mb-7.75">
               <span>Ongoing</span>
               <span>Modules</span>
-              <span>fdsfdsf</span>
             </h1>
             <Carousel>
               <OngoingModulesLayout />
