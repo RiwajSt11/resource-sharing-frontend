@@ -1,65 +1,132 @@
+"use client"
+
+import { useState } from "react";
+
+import searchImg from "@/public/Landing/search.svg";
 import Image from "next/image";
 
-export default function Home() {
+import { useRef } from "react";
+
+import { RecentlyAddedLayout } from "@/components/resources/RecentlyAddedLayout";
+import { OngoingModulesLayout } from "@/components/resources/OngoingModulesLayout";
+import { PreviousModulesLayout } from "@/components/resources/PreviousModulesLayout";
+
+import { Navbar } from "@/components/layouts/Navbar";
+import { ResourcesFooter } from "@/components/layouts/ResourcesFooter";
+import { ResourcesHero } from "@/components/resources/ResourcesHero";
+import { Carousel } from "@/components/resources/Carousel";
+
+function ResourcesLanding() {
+  const [search, setSearch] = useState<string>("");
+
+  const searchRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const handleScrollToSearch = () => {
+    const yOffset = -120;
+    const element = searchRef.current;
+
+    if (element) {
+      const y =
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 500);
+  };
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <>
+      <div className="flex flex-col min-h-screen">
+        <header>
+          <Navbar
+            search={search}
+            setSearch={setSearch}
+            handleScrollToSearch={handleScrollToSearch}
+          />
+        </header>
+
+        <div className="flex-1">
+          <ResourcesHero />
+          <div className="px-5 pr-0 md:px-38 mt-8 md:mt-15.75">
+            <h1 className="text-[24px] md:text-[32.25px] text-black/90 font-semibold tracking-tight flex gap-1.5 ml-0.5 md:mb-7.75">
+              <span>Recently</span>
+              <span>Added</span>
+              <span>Materials</span>
+            </h1>
+            <Carousel>
+              <RecentlyAddedLayout />
+            </Carousel>
+          </div>
+          <div className="px-5 pr-0 md:px-38 mt-8 md:mt-24">
+            <h1 className="text-[24px] md:text-[32.25px] text-black/90 font-semibold tracking-tight flex gap-1.5 ml-0.5 md:mb-7.75">
+              <span>Ongoing</span>
+              <span>Modules</span>
+            </h1>
+            <Carousel>
+              <OngoingModulesLayout />
+            </Carousel>
+          </div>
+          <div
+            className="px-5 pr-0 md:px-37.5 mt-20 md:mt-[87px] mb-10 scroll-mt-35"
+            ref={searchRef}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <h1 className="text-[24px] md:text-[32.25px] text-black/90 font-semibold tracking-tight flex gap-1.5 ml-0.5">
+                <span>Previous</span>
+                <span>Modules</span>
+              </h1>
+              <div className="flex items-center gap-2.5">
+                <div className="flex items-center rounded-full w-55 md:w-96 border border-black/50 px-5 py-[5px] md:py-[7.25px] mt-5 md:mt-0">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    placeholder="Search"
+                    className="w-full outline-none text-[13.25px]"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <Image
+                    src={searchImg}
+                    alt="search-img"
+                    className="w-3 h-3 cursor-pointer"
+                  />
+                </div>
+                <button className="px-1 md:px-3.25 py-[4px] md:py-2 text-primary border border-primary rounded-3xl text-[11px] md:text-[13px] mr-1.5 cursor-pointer transition-colors duration-400 ease-in-out hover:bg-primary hover:text-white hidden md:flex justify-center items-center">
+                  Sort by Level
+                </button>
+              </div>
+            </div>
+            <div>
+              <div>
+                <h2 className="text-primary text-[16px] md:text-[18px] font-medium tracking-widest mt-9.75 ml-4.5 md:mb-5.5">
+                  Level - 4
+                </h2>
+                <div className="md:mx-0.75">
+                  <Carousel>
+                    <PreviousModulesLayout level={4} search={search} />
+                  </Carousel>
+                </div>
+              </div>
+              <div className="mt-10 md:mt-23.75">
+                <h2 className="text-primary text-[18px] font-medium tracking-widest ml-4.5 md:mb-5.5">
+                  Level - 5
+                </h2>
+                <div className="md:mx-0.75">
+                  <Carousel>
+                    <PreviousModulesLayout level={5} search={search} />
+                  </Carousel>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+        <footer className="mt-15 md:mt-42">
+          <ResourcesFooter />
+        </footer>
+      </div>
+    </>
   );
 }
+
+export default ResourcesLanding;
