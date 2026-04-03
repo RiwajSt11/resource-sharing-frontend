@@ -26,13 +26,13 @@ export const ResourcesCard = ({
   return (
     <Link
       href="/module"
-      className="rounded-xl w-full max-w-65 md:max-w-none md:w-100 h-98 md:h-108.75 px-7.25 py-4.25 flex flex-col items-center shadow-[0px_0px_10px_rgba(0,0,0,0.28)] group cursor-pointer"
+      className="rounded-xl w-full max-w-65 md:max-w-100 lg:max-w-100 h-98 md:h-108.75 px-5.5 py-4.25 flex flex-col items-center shadow-[0px_0px_10px_rgba(0,0,0,0.28)] group cursor-pointer"
     >
-      <div className="relative h-37 md:h-52 w-full md:w-89 rounded-lg overflow-hidden">
+      <div className="relative h-37 lg:h-52 w-full md:w-full lg:w-full rounded-lg overflow-hidden">
         <Image
           src={image}
           alt="image"
-          className="w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-120"
+          className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-120"
         />
         <div
           className="absolute inset-0 flex flex-col items-center gap-18.5 
@@ -52,20 +52,20 @@ export const ResourcesCard = ({
           <span className="text-white text-[11px]">Files Shared: 12</span>
         </div>
       </div>
-      <div className="flex justify-between items-center w-full text-[12.5px] mt-[14.5px] text-black/65">
+      <div className="flex justify-between items-center w-full text-[12.5px] mt-[14.5px] text-black/65 px-1.75">
         <p>Computer Science</p>
         <p>Level {level}</p>
       </div>
-      <div className="leading-6.25 w-full mt-0.75">
+      <div className="leading-6.25 w-full mt-0.75 px-1.75">
         <h2 className="text-[16px] md:text-[21.25px] font-semibold tracking-tighter truncate">
           {title}
         </h2>
         <p className="text-[12.5px] text-black/65">{module}</p>
       </div>
-      <p className="w-full text-[14px] text-black/80 mt-1.75 leading-4.25">
+      <p className="w-full text-[14px] text-black/80 mt-1.75 leading-4.25 px-1.75">
         {description}
       </p>
-      <div className="flex justify-between w-full mt-[25px] pl-0.25">
+      <div className="flex justify-between w-full mt-[25px] px-1.75 pl-2">
         <div className="flex gap-1 items-center mt-0.25">
           <Image
             src={clockImg}

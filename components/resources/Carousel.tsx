@@ -71,8 +71,7 @@ export const Carousel = ({ children }: Props) => {
       {/* Scroll container on mobile / grid on desktop */}
       <div
         // ref={scrollRef}
-        className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-4 mt-2.25 md:mt-0 px-2 md:px-0 py-3 md:py-0 ml-0.25
-                   md:grid md:grid-cols-3 md:overflow-visible md:gap-4 md:gap-y-13"
+        className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-4 mt-2.25 md:mt-0 px-2 md:px-0 py-3 md:py-0 ml-0.25 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3 md:overflow-visible md:gap-4 md:gap-y-13"
         style={{ scrollbarWidth: "none" }}
       >
         {children}
