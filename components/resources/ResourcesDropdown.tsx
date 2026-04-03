@@ -14,8 +14,9 @@ export const ResourcesDropdown = ({ show, setShow }: Props) => {
   return (
     <>
       <div
-        className={`fixed top-18 h-86.5 w-full text-white bg-[#303030]/85 flex gap-10 md:gap-25 pl-10 md:pl-69.5 py-6.5 z-520 origin-top transition-all duration-600 ${show ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0"}`}
+        className={`fixed top-18 h-86.5 w-full text-white bg-[#303030]/85 flex gap-10 md:gap-25 pl-10 md:pl-69.5 py-6.5 z-[520] origin-top transition-all duration-600 ${show ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0"}`}
       >
+       
         <div>
           <h2 className="text-[19.5px] font-medium">Level</h2>
           <div className="flex flex-col mt-19.25 ml-0.25 gap-3.75 font-light text-[13px] tracking-wider">
