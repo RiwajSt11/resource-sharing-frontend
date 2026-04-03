@@ -14,7 +14,7 @@ export const ResourcesDropdown = ({ show, setShow }: Props) => {
   return (
     <>
       <div
-        className={`fixed top-18 h-86.5 w-full text-white bg-[#303030]/85 flex gap-10 md:gap-25 pl-10 md:pl-69.5 py-6.5 z-100 origin-top transition-all duration-600 ${show ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0"}`}
+        className={`fixed top-18 h-86.5 w-full text-white bg-[#303030]/85 flex gap-10 md:gap-25 pl-10 md:pl-69.5 py-6.5 z-520 origin-top transition-all duration-600 ${show ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0"}`}
       >
         <div>
           <h2 className="text-[19.5px] font-medium">Level</h2>
@@ -41,7 +41,8 @@ export const ResourcesDropdown = ({ show, setShow }: Props) => {
                     className="flex flex-col gap-3 items-center justify-center"
                   >
                     {group.items.map((item, itemIndex) => (
-                      <Link href="/module"
+                      <Link
+                        href="/module"
                         key={itemIndex}
                         className="transition-colors duration-300 hover:text-primary"
                       >
