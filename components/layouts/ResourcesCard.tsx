@@ -26,7 +26,7 @@ export const ResourcesCard = ({
   return (
     <Link
       href="/module"
-      className="rounded-xl w-full max-w-65 md:max-w-100 lg:max-w-100 h-98 md:h-108.75 px-5.5 py-4.25 flex flex-col items-center shadow-[0px_0px_10px_rgba(0,0,0,0.28)] group cursor-pointer"
+      className="rounded-xl w-full max-w-65 md:max-w-100 lg:max-w-100 h-98 md:h-108.75 px-4.5 md:px-5.5 py-4.25 flex flex-col items-center shadow-[0px_0px_10px_rgba(0,0,0,0.28)] group cursor-pointer"
     >
       <div className="relative h-37 lg:h-52 w-full md:w-full lg:w-full rounded-lg overflow-hidden">
         <Image
@@ -62,7 +62,7 @@ export const ResourcesCard = ({
         </h2>
         <p className="text-[12.5px] text-black/65">{module}</p>
       </div>
-      <p className="w-full text-[14px] text-black/80 mt-1.75 leading-4.25 px-1.75">
+      <p className="w-full text-[14px] text-black/80 mt-1.75 leading-4.25 px-1.75 line-clamp-3">
         {description}
       </p>
       <div className="flex justify-between w-full mt-[25px] px-1.75 pl-2">

@@ -83,30 +83,32 @@ export const Navbar = ({ handleScrollToSearch, search, setSearch }: Props) => {
         </div>
       </nav>
       <div
-        className={`fixed top-[72px] left-0 h-[calc(100vh-72px)] w-[75%] bg-[#303030] text-white flex flex-col items-start gap-6 px-5 py-6 z-70 md:hidden overflow-y-auto transition-all duration-500 ${
+        className={`fixed top-[72px] left-0 h-[calc(100vh-72px)] w-[75%] bg-[#303030] text-white flex flex-col items-start gap-6 px-5 pb-6 z-70 md:hidden overflow-y-auto transition-all duration-500 ${
           menuOpen
             ? "opacity-100 translate-x-0"
             : "opacity-0 -translate-x-15 pointer-events-none"
         }`}
       >
-        <div className="flex items-center rounded-full w-[90%] md:w-96 border border-white px-5 py-2.5 md:py-[7.25px] mt-5 md:mt-0 text-white">
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-full outline-none text-[13.25px]"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <Image
-            src={searchImg}
-            alt="search-img"
-            className="w-4 h-4 cursor-pointer"
-            onClick={() => {
-              setSearch(search);
-              setMenuOpen(false);
-              handleScrollToSearch();
-            }}
-          />
+        <div className="sticky top-0 z-20 bg-[#303030] px-5 py-4">
+          <div className="flex items-center rounded-full w-[95%] md:w-96 border border-white px-5 py-2.5 md:py-[7.25px] md:mt-0 text-white">
+            <input
+              type="text"
+              placeholder="Search"
+              className="w-full outline-none text-[13.25px]"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Image
+              src={searchImg}
+              alt="search-img"
+              className="w-4 h-4 cursor-pointer"
+              onClick={() => {
+                setSearch(search);
+                setMenuOpen(false);
+                handleScrollToSearch();
+              }}
+            />
+          </div>
         </div>
         <div className="px-5 flex flex-col items-start gap-6 text-[20px]">
           <Link href="/" onClick={() => setMenuOpen(false)}>

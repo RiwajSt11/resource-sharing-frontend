@@ -60,7 +60,7 @@ export const ResourcesHero = () => {
           />
         ))}
       </div>
-      <div className="absolute w-[600px] z-10 top-10 md:top-21.25 left-4 md:left-32.25 p-6 md:flex flex-col gap-0 md:gap-4">
+      <div className="hidden absolute w-[600px] z-10 top-10 md:top-21.25 left-4 md:left-32.25 p-6 md:flex flex-col gap-0 md:gap-4">
         <div className="text-white text-[28px] md:text-[43px] tracking-[-0.0085em] leading-5 md:leading-12 font-[600]  mb-3 md:mb-0">
           <div className="flex gap-1.5">
             <span>Push</span>

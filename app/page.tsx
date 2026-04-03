@@ -71,7 +71,7 @@ function ResourcesLanding() {
             className="px-5 pr-0 md:px-37.5 mt-20 md:mt-[87px] mb-10 scroll-mt-35"
             ref={searchRef}
           >
-            <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center px-4.5 md:px-0">
               <h1 className="text-[24px] md:text-[32.25px] text-black/90 font-semibold tracking-tight flex gap-1.5 ml-0.5">
                 <span>Previous</span>
                 <span>Modules</span>
