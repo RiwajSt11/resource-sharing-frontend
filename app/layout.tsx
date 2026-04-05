@@ -14,10 +14,10 @@ export const metadata: Metadata = {
   description: "Herald college resource sharing app",
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.png", sizes: "32x32", type: "image/png" },
+      { url: "/resource-sharing-frontend/favicon.svg", type: "image/svg+xml" },
+      { url: "/resource-sharing-frontend/favicon.png", sizes: "32x32", type: "image/png"},
     ],
-    apple: "/favicon.png",
+    apple: "/resource-sharing-frontend/favicon.png",
   },
 };
 
