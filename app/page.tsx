@@ -16,6 +16,19 @@ import { ResourcesFooter } from "@/components/layouts/ResourcesFooter";
 import { ResourcesHero } from "@/components/resources/ResourcesHero";
 import { Carousel } from "@/components/resources/Carousel";
 
+import getModules from "@/libs/services/moduleService";
+import { useEffect } from "react";
+
+interface Module {
+  name: string;
+  course_code: string;
+  level: number;
+  semester: number;
+  description: string;
+  time_label: string;
+  image_url: string;
+}
+
 function ResourcesLanding() {
   const [search, setSearch] = useState<string>("");
 
@@ -35,6 +48,22 @@ function ResourcesLanding() {
       inputRef.current?.focus();
     }, 500);
   };
+
+  const [modules, setModules] = useState<Module[]>([]);
+
+  useEffect(() => {
+    const fetchModules = async () => {
+      try {
+        const response = await getModules();
+        console.log(response.data);
+        setModules(response.data);
+      } catch (error) {
+        console.error("Error fetching modules:", error);
+      }
+    };
+    fetchModules();
+  }, []);
+
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -55,7 +84,7 @@ function ResourcesLanding() {
               <span>Materials</span>
             </h1>
             <Carousel>
-              <RecentlyAddedLayout />
+              <RecentlyAddedLayout modules={modules} />
             </Carousel>
           </div>
           <div className="px-5 pr-0 md:px-38 mt-8 md:mt-24">
@@ -64,7 +93,7 @@ function ResourcesLanding() {
               <span>Modules</span>
             </h1>
             <Carousel>
-              <OngoingModulesLayout />
+              <OngoingModulesLayout modules={modules} />
             </Carousel>
           </div>
           <div
@@ -104,7 +133,7 @@ function ResourcesLanding() {
                 </h2>
                 <div className="md:mx-0.75">
                   <Carousel>
-                    <PreviousModulesLayout level={4} search={search} />
+                    <PreviousModulesLayout level={4} search={search} modules={modules} />
                   </Carousel>
                 </div>
               </div>
@@ -114,7 +143,7 @@ function ResourcesLanding() {
                 </h2>
                 <div className="md:mx-0.75">
                   <Carousel>
-                    <PreviousModulesLayout level={5} search={search} />
+                    <PreviousModulesLayout level={5} search={search} modules={modules} />
                   </Carousel>
                 </div>
               </div>

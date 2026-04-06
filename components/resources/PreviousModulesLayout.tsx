@@ -1,123 +1,33 @@
 import { ResourcesCard } from "@/components/layouts/ResourcesCard";
-import img1 from "@/public/Landing/previousModuleImages/img1.svg";
-import img2 from "@/public/Landing/previousModuleImages/img2.svg";
-import img3 from "@/public/Landing/previousModuleImages/img3.svg";
-import img4 from "@/public/Landing/previousModuleImages/img4.svg";
-import img5 from "@/public/Landing/previousModuleImages/img5.svg";
-import img6 from "@/public/Landing/previousModuleImages/img6.svg";
-import img7 from "@/public/Landing/previousModuleImages/img7.svg";
-import img8 from "@/public/Landing/previousModuleImages/img8.svg";
-import img9 from "@/public/Landing/previousModuleImages/img9.svg";
+import { Module } from "@/types/Module";
 
 interface Props {
   search: string;
   level: number;
+  modules: Module[];
 }
 
-export const PreviousModulesLayout = ({ search, level }: Props) => {
-  const cardInfo = [
-    {
-      title: "Introductory Programming And Problem Solving",
-      module: "4CS001",
-      level: 4,
-      description:
-        "In this module, you will learn how to program, using the programming language Python. You will then apply what you have learn to solve problems.",
-      time: "Week 12 (Complete)",
-      image: img1,
-    },
-    {
-      title: "Internet Software Architecutre",
-      module: "4CS017",
-      level: 4,
-      description:
-        "In this module, you will learn how to program, using the programming language Python. You will then apply what you have learn to solve problems.",
-      time: "Week 12 (Complete)",
-      image: img2,
-    },
-    {
-      title: "Fundamental of Computing",
-      module: "4CS015",
-      level: 4,
-      description:
-        "In this module, you will learn how to program, using the programming language Python. You will then apply what you have learn to solve problems.",
-      time: "Week 12 (Complete)",
-      image: img3,
-    },
-    {
-      title: "Object-Oriented Programming",
-      module: "4CS021",
-      level: 4,
-      description:
-        "In this module, you will learn how to program, using the programming language Python. You will then apply what you have learn to solve problems.",
-      time: "Completed",
-      image: img4,
-    },
-    {
-      title: "Games Technology for Serious Application",
-      module: "4CS020",
-      level: 4,
-      description:
-        "In this module, you will learn how to program, using the programming language Python. You will then apply what you have learn to solve problems.",
-      time: "Completed",
-      image: img5,
-    },
-    {
-      title: "Computational Mathematics",
-      module: "4MM013",
-      level: 4,
-      description:
-        "In this module, you will learn how to program, using the programming language Python. You will then apply what you have learn to solve problems.",
-      time: "Completed",
-      image: img6,
-    },
-    {
-      title: "Object Oriented Design and Programming",
-      module: "4CS019",
-      level: 5,
-      description:
-        "In this module, you will learn how to program, using the programming language Python. You will then apply what you have learn to solve problems.",
-      time: "Week 4",
-      image: img7,
-    },
-    {
-      title: "Numerical Methods and Concurrency",
-      module: "4CS021",
-      level: 5,
-      description:
-        "In this module, you will learn how to program, using the programming language Python. You will then apply what you have learn to solve problems.",
-      time: "Week 4",
-      image: img8,
-    },
-    {
-      title: "Concept and Technologies of AI",
-      module: "4CS037",
-      level: 5,
-      description:
-        "In this module, you will learn how to program, using the programming language Python. You will then apply what you have learn to solve problems.",
-      time: "Week 4",
-      image: img9,
-    },
-  ];
-
-  const filteredCards = cardInfo
-    .filter((card) => level === card.level)
+export const PreviousModulesLayout = ({ search, level, modules }: Props) => {
+  const filteredModules = modules
+    .filter((module) => module.level === level)
     .filter(
-      (card) =>
-        card.title.toLowerCase().includes(search.toLowerCase()) ||
-        card.module.toLowerCase().includes(search.toLowerCase()),
+      (module) =>
+        module.name.toLowerCase().includes(search.toLowerCase()) ||
+        module.course_code.toLowerCase().includes(search.toLowerCase()),
     );
+  console.log(filteredModules);
   return (
     <>
-      {filteredCards.length > 0 ? (
-        filteredCards.map((card, index) => (
+      {filteredModules.length > 0 ? (
+        filteredModules.map((module, index) => (
           <div key={index} className="snap-center">
             <ResourcesCard
-              title={card.title}
-              module={card.module}
-              level={card.level}
-              description={card.description}
-              time={card.time}
-              image={card.image}
+              title={module.name}
+              module={module.course_code}
+              level={module.level}
+              description={module.description}
+              time={module.time_label}
+              image={module.image_url}
             />
           </div>
         ))

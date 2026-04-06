@@ -32,6 +32,7 @@ export const ResourcesCard = ({
         <Image
           src={image}
           alt="image"
+          fill
           className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-120"
         />
         <div
