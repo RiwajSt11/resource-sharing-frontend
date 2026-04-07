@@ -13,7 +13,7 @@ export const PreviousModulesLayout = ({ search, level, modules }: Props) => {
     .filter(
       (module) =>
         module.name.toLowerCase().includes(search.toLowerCase()) ||
-        module.course_code.toLowerCase().includes(search.toLowerCase()),
+        module.code.toLowerCase().includes(search.toLowerCase()),
     );
   console.log(filteredModules);
   return (
@@ -22,8 +22,9 @@ export const PreviousModulesLayout = ({ search, level, modules }: Props) => {
         filteredModules.map((module, index) => (
           <div key={index} className="snap-center">
             <ResourcesCard
+            code={module.code}
               title={module.name}
-              module={module.course_code}
+              module={module.code}
               level={module.level}
               description={module.description}
               time={module.time_label}

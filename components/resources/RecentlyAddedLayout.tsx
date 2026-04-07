@@ -15,8 +15,9 @@ export const RecentlyAddedLayout = ({ modules }: Props) => {
         filteredModules.map((module, index) => (
           <div key={index} className="snap-center">
             <ResourcesCard
+              code={module.code}
               title={module.name}
-              module={module.course_code}
+              module={module.code}
               level={module.level}
               description={module.description}
               time={module.time_label}

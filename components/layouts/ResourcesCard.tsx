@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 interface Props {
+  code: string;
   title: string;
   module: string;
   level: number;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export const ResourcesCard = ({
+  code,
   title,
   module,
   level,
@@ -25,7 +27,7 @@ export const ResourcesCard = ({
 }: Props) => {
   return (
     <Link
-      href="/module"
+      href={`/course/${code}`}
       className="rounded-xl w-full max-w-65 md:max-w-100 lg:max-w-100 h-98 md:h-108.75 px-4.5 md:px-5.5 py-4.25 flex flex-col items-center shadow-[0px_0px_10px_rgba(0,0,0,0.28)] group cursor-pointer"
     >
       <div className="relative h-37 lg:h-52 w-full md:w-full lg:w-full rounded-lg overflow-hidden">

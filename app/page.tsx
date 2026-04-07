@@ -16,18 +16,9 @@ import { ResourcesFooter } from "@/components/layouts/ResourcesFooter";
 import { ResourcesHero } from "@/components/resources/ResourcesHero";
 import { Carousel } from "@/components/resources/Carousel";
 
-import getModules from "@/libs/services/moduleService";
+import {getModules} from "@/libs/services/moduleService";
 import { useEffect } from "react";
-
-interface Module {
-  name: string;
-  course_code: string;
-  level: number;
-  semester: number;
-  description: string;
-  time_label: string;
-  image_url: string;
-}
+import { Module } from "@/types/Module";
 
 function ResourcesLanding() {
   const [search, setSearch] = useState<string>("");

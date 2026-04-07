@@ -2,7 +2,7 @@ import { cardInfo } from "@/data/ResourcesCardData";
 import { ResourcesCard } from "./ResourcesCard";
 
 import { useEffect, useState } from "react";
-import getModules from "@/libs/services/moduleService";
+import {getModules} from "@/libs/services/moduleService";
 import { Module } from "@/types/Module";
 import { modules } from "@/data/ModulesData";
 
@@ -34,11 +34,11 @@ export const ResourcesSemLayout = ({ search, level, sem }: Props) => {
   //       card.module.toLowerCase().includes(search.toLowerCase()),
   //   );
   const filteredModules = modules
-    .filter((module) => module.level === level && module.semester === sem)
+    .filter((module) => module.level === level && module.semester == sem)
     .filter(
       (module) =>
         module.name.toLowerCase().includes(search.toLowerCase()) ||
-        module.course_code.toLowerCase().includes(search.toLowerCase()),
+        module.code.toLowerCase().includes(search.toLowerCase()),
     );
   console.log(filteredModules);
   return (
@@ -47,8 +47,9 @@ export const ResourcesSemLayout = ({ search, level, sem }: Props) => {
         filteredModules.map((module, index) => (
           <div key={index} className="snap-center">
             <ResourcesCard
+              code={module.code}
               title={module.name}
-              module={module.course_code}
+              module={module.code}
               level={module.level}
               description={module.description}
               time={module.time_label}
