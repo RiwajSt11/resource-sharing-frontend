@@ -1,11 +1,24 @@
 import { ResourcesCard } from "@/components/layouts/ResourcesCard";
 // import cardInfo from "@/data/RecentlyAddedData";
 import { Module } from "@/types/Module";
+import { ResourcesCardSkeleton } from "../layouts/ResourcesCardSkeleton";
 
 interface Props {
   modules: Module[];
+  loading?: boolean;
 }
-export const RecentlyAddedLayout = ({ modules }: Props) => {
+export const RecentlyAddedLayout = ({ modules, loading }: Props) => {
+  if (loading) {
+    return (
+      <>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="snap-center">
+            <ResourcesCardSkeleton />
+          </div>
+        ))}
+      </>
+    );
+  }
   const filteredModules = modules.filter(
     (module) => module.status === "recent",
   );

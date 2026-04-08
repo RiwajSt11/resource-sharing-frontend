@@ -29,7 +29,7 @@ export const ModuleCard = ({ module }: Props) => {
           .map((week) => (
             <div
               key={week.number}
-              className={`border w-[99%] md:w-151 border-black/10 rounded-lg px-5.5 cursor-pointer transition-all duration-500 ${showCard.includes(week.number) ? "shadow-lg" : ""}`}
+              className={`border w-[99%] md:w-[99%] border-black/10 rounded-lg px-5.5 cursor-pointer transition-all duration-500 ${showCard.includes(week.number) ? "shadow-lg" : ""}`}
               onClick={() => handleClick(week.number)}
             >
               <div className="flex justify-between items-center py-3">

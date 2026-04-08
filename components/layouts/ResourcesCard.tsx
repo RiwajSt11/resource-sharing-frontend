@@ -83,17 +83,17 @@ export const ResourcesCard = ({
           <Image
             src={circle}
             alt="circle-img"
-            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-30 right-0"
+            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-20 right-0"
           />
           <Image
             src={circle}
             alt="circle-img"
-            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-20 right-4 transition-all ease-in-out duration-500 group-hover:right-6.5"
+            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-10 right-4 transition-all ease-in-out duration-500 group-hover:right-6.5"
           />
           <Image
             src={circle}
             alt="circle-img"
-            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-10 right-8 transition-all ease-in-out duration-500 group-hover:right-13"
+            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-0 right-8 transition-all ease-in-out duration-500 group-hover:right-13"
           />
         </div>
       </div>

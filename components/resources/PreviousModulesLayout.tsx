@@ -1,13 +1,31 @@
 import { ResourcesCard } from "@/components/layouts/ResourcesCard";
 import { Module } from "@/types/Module";
+import { ResourcesCardSkeleton } from "../layouts/ResourcesCardSkeleton";
 
 interface Props {
   search: string;
   level: number;
   modules: Module[];
+  loading: boolean;
 }
 
-export const PreviousModulesLayout = ({ search, level, modules }: Props) => {
+export const PreviousModulesLayout = ({
+  search,
+  level,
+  modules,
+  loading,
+}: Props) => {
+  if (loading) {
+    return (
+      <>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="snap-center">
+            <ResourcesCardSkeleton />
+          </div>
+        ))}
+      </>
+    );
+  }
   const filteredModules = modules
     .filter((module) => module.level === level)
     .filter(
@@ -22,7 +40,7 @@ export const PreviousModulesLayout = ({ search, level, modules }: Props) => {
         filteredModules.map((module, index) => (
           <div key={index} className="snap-center">
             <ResourcesCard
-            code={module.code}
+              code={module.code}
               title={module.name}
               module={module.code}
               level={module.level}

@@ -1,7 +1,12 @@
+"use-client"
+
 import { ResourcesSemLayout } from "@/components/layouts/ResourcesSemLayout";
 import searchImg from "@/public/Landing/search.svg";
 import { Carousel } from "./Carousel";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { getModules } from "@/libs/services/moduleService";
+import { Module } from "@/types/Module";
 
 interface Props {
   searchRef?: React.RefObject<HTMLDivElement | null>;
@@ -20,6 +25,21 @@ export const ResourcesSemSection = ({
   setSearch,
   searchDiv,
 }: Props) => {
+  const [modules, setModules] = useState<Module[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  useEffect(() => {
+    const fetchModules = async () => {
+      try {
+        const response = await getModules();
+        console.log(response.data);
+        setModules(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching modules:", error);
+      }
+    };
+    fetchModules();
+  }, []);
   return (
     <div>
       <div className="flex flex-col-reverse md:flex-row justify-between items-start md:items-center px-2 md:px-2.75">
@@ -63,7 +83,13 @@ export const ResourcesSemSection = ({
           1st Semester
         </h3>
         <Carousel>
-          <ResourcesSemLayout search={search} level={level} sem={1} />
+          <ResourcesSemLayout
+            search={search}
+            level={level}
+            sem={1}
+            modules={modules}
+            loading={loading}
+          />
         </Carousel>
       </div>
       <div className="flex flex-col items-start w-full min-w-0">
@@ -71,7 +97,13 @@ export const ResourcesSemSection = ({
           2nd Semester
         </h3>
         <Carousel>
-          <ResourcesSemLayout search={search} level={level} sem={2} />
+          <ResourcesSemLayout
+            search={search}
+            level={level}
+            sem={2}
+            modules={modules}
+            loading={loading}
+          />
         </Carousel>
       </div>
     </div>

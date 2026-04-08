@@ -16,7 +16,7 @@ import { ResourcesFooter } from "@/components/layouts/ResourcesFooter";
 import { ResourcesHero } from "@/components/resources/ResourcesHero";
 import { Carousel } from "@/components/resources/Carousel";
 
-import {getModules} from "@/libs/services/moduleService";
+import { getModules } from "@/libs/services/moduleService";
 import { useEffect } from "react";
 import { Module } from "@/types/Module";
 
@@ -41,6 +41,7 @@ function ResourcesLanding() {
   };
 
   const [modules, setModules] = useState<Module[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchModules = async () => {
@@ -48,6 +49,7 @@ function ResourcesLanding() {
         const response = await getModules();
         console.log(response.data);
         setModules(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching modules:", error);
       }
@@ -75,7 +77,7 @@ function ResourcesLanding() {
               <span>Materials</span>
             </h1>
             <Carousel>
-              <RecentlyAddedLayout modules={modules} />
+              <RecentlyAddedLayout modules={modules} loading={loading} />
             </Carousel>
           </div>
           <div className="px-5 pr-0 md:px-38 mt-8 md:mt-24">
@@ -84,7 +86,7 @@ function ResourcesLanding() {
               <span>Modules</span>
             </h1>
             <Carousel>
-              <OngoingModulesLayout modules={modules} />
+              <OngoingModulesLayout modules={modules} loading={loading} />
             </Carousel>
           </div>
           <div
@@ -124,7 +126,12 @@ function ResourcesLanding() {
                 </h2>
                 <div className="md:mx-0.75">
                   <Carousel>
-                    <PreviousModulesLayout level={4} search={search} modules={modules} />
+                    <PreviousModulesLayout
+                      level={4}
+                      search={search}
+                      modules={modules}
+                      loading={loading}
+                    />
                   </Carousel>
                 </div>
               </div>
@@ -134,7 +141,12 @@ function ResourcesLanding() {
                 </h2>
                 <div className="md:mx-0.75">
                   <Carousel>
-                    <PreviousModulesLayout level={5} search={search} modules={modules} />
+                    <PreviousModulesLayout
+                      level={5}
+                      search={search}
+                      modules={modules}
+                      loading={loading}
+                    />
                   </Carousel>
                 </div>
               </div>

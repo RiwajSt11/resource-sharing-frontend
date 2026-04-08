@@ -4,10 +4,12 @@ import Image from "next/image";
 import HCKlogo from "@/public/Landing/HCKLogo.svg";
 import arrow from "@/public/Landing/arrow.svg";
 import Link from "next/link";
-import { modules } from "@/data/ModulesData";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import searchImg from "@/public/Navbar/search.svg";
 import { ResourcesDropdown } from "@/components/resources/ResourcesDropdown";
+import { SubmitRequest } from "./SubmitRequest";
+import { getModules } from "@/libs/services/moduleService";
+import { Module } from "@/types/Module";
 
 interface Props {
   handleScrollToSearch: () => void;
@@ -15,11 +17,51 @@ interface Props {
   setSearch: (value: string) => void;
 }
 
+const groupModules = (modules: Module[]) => {
+  const levels = [4, 5, 6];
+  return levels.map((level) => {
+    const levelModules = modules.filter((m) => m.level === level);
+    const semesters = [...new Set(levelModules.map((m) => m.semester))].sort();
+    return {
+      level,
+      semesters: semesters.map((sem) => ({
+        semester: sem,
+        items: levelModules.filter((m) => m.semester === sem),
+      })),
+    };
+  });
+};
+
+const MobileMenuSkeleton = () => (
+  <>
+    {[1, 2, 3].map((col) => (
+      <div key={col} className="flex flex-col gap-8">
+        {[1, 2].map((group) => (
+          <div
+            key={group}
+            className="flex flex-col gap-3 items-start justify-center"
+          >
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={i}
+                className="h-3 w-32 bg-white/20 animate-pulse rounded"
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    ))}
+  </>
+);
+
 export const Navbar = ({ handleScrollToSearch, search, setSearch }: Props) => {
   const [show, setShow] = useState<boolean>(false);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [submitOpen, setSubmitOpen] = useState<boolean>(false);
+  const [modules, setModules] = useState<Module[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -30,9 +72,25 @@ export const Navbar = ({ handleScrollToSearch, search, setSearch }: Props) => {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    const fetchModules = async () => {
+      try {
+        const response = await getModules();
+        setModules(response.data);
+      } catch (error) {
+        console.error("Error fetching modules:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchModules();
+  }, []);
+
+  const grouped = groupModules(modules);
+
   return (
     <>
-      <nav className="fixed top-0 left-0 z-50 w-full flex justify-between items-center bg-[#303030] h-[72px] px-[25px] md:px-[141.5px]">
+      <nav className="fixed top-0 left-0 z-30 w-full flex justify-between items-center bg-[#303030] h-[72px] px-[25px] md:px-[141.5px]">
         <div className="flex">
           <button
             className="md:hidden text-white text-2xl mr-2"
@@ -48,7 +106,9 @@ export const Navbar = ({ handleScrollToSearch, search, setSearch }: Props) => {
             />
           </Link>
         </div>
-        <div className="hidden md:flex flex-row gap-5 items-center mr-2.25">
+        <div
+          className={`hidden md:flex flex-row gap-5 items-center mr-2.25 ${submitOpen ? "-translate-x-66" : "translate-x-0"} transition-transform duration-500`}
+        >
           <Link
             href="/"
             className="text-white text-sm mr-2.25 font-normal transition-colors duration-300 hover:text-primary"
@@ -76,12 +136,14 @@ export const Navbar = ({ handleScrollToSearch, search, setSearch }: Props) => {
         <div className="flex items-center">
           <button
             type="button"
-            className="flex px-3.25 py-2.25 bg-primary text-white rounded-lg text-[10px] md:text-[13px] mr-2.5 cursor-pointer"
+            onClick={() => setSubmitOpen(!submitOpen)}
+            className={`flex px-3.25 py-2.25 bg-primary text-white rounded-lg text-[10px] md:text-[13px] mr-2.5 cursor-pointer ${submitOpen ? "-translate-x-132.5" : "translate-x-0"} transition-transform duration-500`}
           >
             Request Resources
           </button>
         </div>
       </nav>
+
       <div
         className={`fixed top-[72px] left-0 h-[calc(100vh-72px)] w-[75%] bg-[#303030] text-white flex flex-col items-start gap-6 px-5 pb-6 z-70 md:hidden overflow-y-auto transition-all duration-500 ${
           menuOpen
@@ -116,35 +178,48 @@ export const Navbar = ({ handleScrollToSearch, search, setSearch }: Props) => {
           </Link>
 
           <Link href="/resources">Resources</Link>
-          {modules.map((column, colIndex) => (
-            <div key={colIndex} className="flex flex-col gap-8">
-              {column.map((group, groupIndex) => (
-                <div
-                  key={groupIndex}
-                  className="flex flex-col gap-3 items-start justify-center"
-                >
-                  {group.items.map((item, itemIndex) => (
-                    <Link
-                      href="/module"
-                      key={itemIndex}
-                      className="text-[14px] text-white/50 transition-colors duration-300 hover:text-primary"
-                    >
-                      {item}
-                    </Link>
-                  ))}
-                </div>
-              ))}
-            </div>
-          ))}
+
+          {/* Skeleton or real data — same structure as original */}
+          {loading ? (
+            <MobileMenuSkeleton />
+          ) : (
+            grouped.map(({ level, semesters }) => (
+              <div key={level} className="flex flex-col gap-8">
+                {semesters.map(({ semester, items }) => (
+                  <div
+                    key={semester}
+                    className="flex flex-col gap-3 items-start justify-center"
+                  >
+                    {items.map((module) => (
+                      <Link
+                        href={`/course/${module.code}`}
+                        key={module.code}
+                        className="text-[14px] text-white/50 transition-colors duration-300 hover:text-primary"
+                      >
+                        {module.code} {module.name}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            ))
+          )}
         </div>
       </div>
+
       {menuOpen && (
         <div
           className="fixed inset-0 z-60"
           onClick={() => setMenuOpen(false)}
         ></div>
       )}
-      <ResourcesDropdown show={show} setShow={setShow} />
+      <ResourcesDropdown
+        show={submitOpen ? false : show}
+        setShow={setShow}
+        modules={modules}
+        loading={loading}
+      />
+      <SubmitRequest submitOpen={submitOpen} setSubmitOpen={setSubmitOpen} />
     </>
   );
 };

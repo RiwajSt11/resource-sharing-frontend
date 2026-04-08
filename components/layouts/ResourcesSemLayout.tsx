@@ -1,31 +1,25 @@
 import { cardInfo } from "@/data/ResourcesCardData";
 import { ResourcesCard } from "./ResourcesCard";
 
-import { useEffect, useState } from "react";
-import {getModules} from "@/libs/services/moduleService";
 import { Module } from "@/types/Module";
 import { modules } from "@/data/ModulesData";
+import { ResourcesCardSkeleton } from "./ResourcesCardSkeleton";
 
 interface Props {
   search: string;
   level: number;
   sem: number;
+  modules: Module[];
+  loading: boolean;
 }
 
-export const ResourcesSemLayout = ({ search, level, sem }: Props) => {
-  const [modules, setModules] = useState<Module[]>([]);
-  useEffect(() => {
-    const fetchModules = async () => {
-      try {
-        const response = await getModules();
-        console.log(response.data);
-        setModules(response.data);
-      } catch (error) {
-        console.error("Error fetching modules:", error);
-      }
-    };
-    fetchModules();
-  }, []);
+export const ResourcesSemLayout = ({
+  search,
+  level,
+  sem,
+  modules,
+  loading,
+}: Props) => {
   // const filteredModules = cardInfo
   //   .filter((card) => level === card.level && sem === card.sem)
   //   .filter(
@@ -33,6 +27,18 @@ export const ResourcesSemLayout = ({ search, level, sem }: Props) => {
   //       card.title.toLowerCase().includes(search.toLowerCase()) ||
   //       card.module.toLowerCase().includes(search.toLowerCase()),
   //   );
+
+  if (loading) {
+    return (
+      <>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="snap-center">
+            <ResourcesCardSkeleton />
+          </div>
+        ))}
+      </>
+    );
+  }
   const filteredModules = modules
     .filter((module) => module.level === level && module.semester == sem)
     .filter(
