@@ -46,7 +46,6 @@ export const ResourcesSemLayout = ({
         module.name.toLowerCase().includes(search.toLowerCase()) ||
         module.code.toLowerCase().includes(search.toLowerCase()),
     );
-  console.log(filteredModules);
   return (
     <>
       {filteredModules.length > 0 ? (

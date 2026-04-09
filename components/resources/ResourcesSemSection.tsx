@@ -31,7 +31,6 @@ export const ResourcesSemSection = ({
     const fetchModules = async () => {
       try {
         const response = await getModules();
-        console.log(response.data);
         setModules(response.data);
         setLoading(false);
       } catch (error) {

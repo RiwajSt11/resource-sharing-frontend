@@ -13,5 +13,6 @@ export interface Module {
   welcome_text?: string;
   overview_text?: string;
   learning_outcomes?: string[];
-  weeks?: Week[]
+  weeks?: Week[];
+  updatedAt: Date;
 }

@@ -19,9 +19,13 @@ export const RecentlyAddedLayout = ({ modules, loading }: Props) => {
       </>
     );
   }
-  const filteredModules = modules.filter(
-    (module) => module.status === "recent",
-  );
+  const filteredModules = [...modules]
+  .sort(
+    (a, b) =>
+      new Date(b.updatedAt).getTime() -
+      new Date(a.updatedAt).getTime()
+  )
+  .slice(0, 3);
   return (
     <>
       {filteredModules.length > 0 ? (

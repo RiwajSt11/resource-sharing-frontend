@@ -13,7 +13,6 @@ const getModules = async () => {
     }
 
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching modules:", error);

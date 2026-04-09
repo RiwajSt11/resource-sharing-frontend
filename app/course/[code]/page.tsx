@@ -19,7 +19,6 @@ const Course = () => {
     const fetchModules = async () => {
       try {
         const response = await getModuleByCode(code as string);
-        console.log(response.data);
         setModule(response.data);
       } catch (error) {
         console.error("Error fetching modules:", error);

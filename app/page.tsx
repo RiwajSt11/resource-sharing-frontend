@@ -47,7 +47,7 @@ function ResourcesLanding() {
     const fetchModules = async () => {
       try {
         const response = await getModules();
-        console.log(response.data);
+     
         setModules(response.data);
         setLoading(false);
       } catch (error) {

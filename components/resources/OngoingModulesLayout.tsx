@@ -20,7 +20,7 @@ export const OngoingModulesLayout = ({ modules, loading }: Props) => {
     );
   }
   const filteredModules = modules.filter(
-    (module) => module.status === "ongoing",
+    (module) => module.status === "current",
   );
   return (
     <>

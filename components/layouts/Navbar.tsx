@@ -183,26 +183,30 @@ export const Navbar = ({ handleScrollToSearch, search, setSearch }: Props) => {
           {loading ? (
             <MobileMenuSkeleton />
           ) : (
-            grouped.map(({ level, semesters }) => (
-              <div key={level} className="flex flex-col gap-8">
-                {semesters.map(({ semester, items }) => (
-                  <div
-                    key={semester}
-                    className="flex flex-col gap-3 items-start justify-center"
-                  >
-                    {items.map((module) => (
-                      <Link
-                        href={`/course/${module.code}`}
-                        key={module.code}
-                        className="text-[14px] text-white/50 transition-colors duration-300 hover:text-primary"
+            grouped.map(
+              ({ level, semesters }) => (
+                (
+                  <div key={level} className="flex flex-col gap-8">
+                    {semesters.map(({ semester, items }) => (
+                      <div
+                        key={semester}
+                        className="flex flex-col gap-3 items-start justify-center"
                       >
-                        {module.code} {module.name}
-                      </Link>
+                        {items.map((module) => (
+                          <Link
+                            href={`/course/${module.code}`}
+                            key={module.code}
+                            className="text-[14px] text-white/50 transition-colors duration-300 hover:text-primary"
+                          >
+                            {module.code} {module.name}
+                          </Link>
+                        ))}
+                      </div>
                     ))}
                   </div>
-                ))}
-              </div>
-            ))
+                )
+              ),
+            )
           )}
         </div>
       </div>
