@@ -43,7 +43,7 @@ export const RecentlyAddedLayout = ({ modules, loading }: Props) => {
           </div>
         ))
       ) : (
-        <div className="w-[1250px] mt-10 mb-5 flex items-center justify-center text-xl text-black/60">
+        <div className="w-full md:col-span-2 lg:col-span-3 mt-10 mb-5 flex items-center justify-center text-xl text-black/60">
           No results found
         </div>
       )}

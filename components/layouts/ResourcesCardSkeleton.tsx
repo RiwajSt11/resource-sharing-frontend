@@ -2,9 +2,9 @@
 
 export const ResourcesCardSkeleton = () => {
   return (
-    <div className="rounded-xl w-full max-w-65 md:max-w-100 lg:max-w-100 h-98 md:h-108.75 px-4.5 md:px-5.5 py-4.25 flex flex-col items-center shadow-[0px_0px_10px_rgba(0,0,0,0.28)]">
+    <div className="rounded-xl w-65 flex-shrink-0 md:w-full md:max-w-[360px] lg:max-w-100 mx-auto px-4.5 md:px-5.5 py-4.25 flex flex-col items-center shadow-[0px_0px_10px_rgba(0,0,0,0.28)]">
       {/* Image area */}
-      <div className="h-37 lg:h-52 w-full rounded-lg bg-gray-200 animate-pulse" />
+      <div className="h-37 md:h-44 lg:h-52 w-full rounded-lg bg-gray-200 animate-pulse" />
 
       {/* Computer Science / Level row */}
       <div className="flex justify-between items-center w-full mt-[14.5px] px-1.75">
@@ -26,7 +26,7 @@ export const ResourcesCardSkeleton = () => {
       </div>
 
       {/* Bottom row: clock + circles */}
-      <div className="flex justify-between w-full mt-[25px] px-1.75 pl-2">
+      <div className="flex justify-between w-full mt-auto pt-4 px-1.75 pl-2">
         {/* Clock + time */}
         <div className="flex gap-1 items-center">
           <div className="w-3.5 md:w-4.5 h-3.5 md:h-4.5 bg-gray-200 animate-pulse rounded-full" />

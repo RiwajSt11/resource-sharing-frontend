@@ -31,7 +31,7 @@ const Resources = () => {
         setSearch={setSearch}
         handleScrollToSearch={handleScrollToSearch}
       />
-      <main className="px-5 pr-0 md:px-37.25 mt-30 md:mt-36.5 min-h-screen">
+      <main className="px-5 pr-0 md:px-10 lg:px-37.25 mt-30 md:mt-36.5 min-h-screen">
         <ResourcesSemSection
           searchRef={searchRef}
           inputRef={inputRef}

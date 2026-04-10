@@ -46,9 +46,11 @@ export const ResourcesSemLayout = ({
         module.name.toLowerCase().includes(search.toLowerCase()) ||
         module.code.toLowerCase().includes(search.toLowerCase()),
     );
+    
   return (
     <>
       {filteredModules.length > 0 ? (
+       
         filteredModules.map((module, index) => (
           <div key={index} className="snap-center">
             <ResourcesCard
@@ -63,7 +65,7 @@ export const ResourcesSemLayout = ({
           </div>
         ))
       ) : (
-        <div className="w-[1250px] mt-15 flex items-center justify-center text-xl text-black/60">
+        <div className="w-full md:col-span-2 lg:col-span-3 mt-15 flex items-center justify-center text-xl text-black/60">
           No results found
         </div>
       )}

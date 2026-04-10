@@ -70,7 +70,7 @@ function ResourcesLanding() {
 
         <div className="flex-1">
           <ResourcesHero />
-          <div className="px-5 pr-0 md:px-38 mt-8 md:mt-15.75">
+          <div className="px-5 pr-0 md:px-10 lg:px-38 mt-8 md:mt-15.75">
             <h1 className="text-[24px] md:text-[32.25px] text-black/90 font-semibold tracking-tight flex gap-1.5 ml-0.5 md:mb-7.75">
               <span>Recently</span>
               <span>Added</span>
@@ -80,7 +80,7 @@ function ResourcesLanding() {
               <RecentlyAddedLayout modules={modules} loading={loading} />
             </Carousel>
           </div>
-          <div className="px-5 pr-0 md:px-38 mt-8 md:mt-24">
+          <div className="px-5 pr-0 md:px-10 lg:px-38 mt-8 md:mt-24">
             <h1 className="text-[24px] md:text-[32.25px] text-black/90 font-semibold tracking-tight flex gap-1.5 ml-0.5 md:mb-7.75">
               <span>Ongoing</span>
               <span>Modules</span>
@@ -90,7 +90,7 @@ function ResourcesLanding() {
             </Carousel>
           </div>
           <div
-            className="px-5 pr-0 md:px-37.5 mt-20 md:mt-[87px] mb-10 scroll-mt-35"
+            className="px-5 pr-0 md:px-10 lg:px-37.5 mt-20 md:mt-[87px] mb-10 scroll-mt-35"
             ref={searchRef}
           >
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center px-4.5 md:px-0">

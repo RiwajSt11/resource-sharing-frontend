@@ -83,7 +83,7 @@ export const NavbarNoSearch = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 z-30 w-full flex justify-between items-center bg-[#303030] h-[72px] px-[25px] md:px-[141.5px]">
+      <nav className="fixed top-0 left-0 z-30 w-full flex justify-between items-center bg-[#303030] h-[72px] px-[25px] md:px-10 lg:px-[141.5px]">
         <div className="flex">
           <button
             className="md:hidden text-white text-2xl mr-2"

@@ -42,7 +42,7 @@ const Course = () => {
 
       <div
         style={{ backgroundImage: `url(${heroImg.src})` }}
-        className="h-[220px] md:h-[241.5px] mt-17 bg-cover px-10 md:px-38.25 py-6"
+        className="h-[220px] md:h-[241.5px] mt-17 bg-cover px-10 md:px-10 lg:px-38.25 py-6"
       >
         <div className="text-white text-[13.5px] flex items-center gap-2 font-light px-2">
           <Link href="/">Home</Link>
@@ -68,7 +68,7 @@ const Course = () => {
         </div>
       </div>
       <div className="mb-45 md:mb-75">
-        <div className="px-10 md:px-37.5 mt-10 md:mt-15 w-full md:w-[72.5%]">
+        <div className="px-10 md:px-10 lg:px-37.5 mt-10 md:mt-15 w-full md:w-[72.5%]">
           <h3 className="text-[20px] md:text-[23px] tracking-[-0.035em] font-semibold">
             {module.welcome_text}
           </h3>
@@ -76,7 +76,7 @@ const Course = () => {
             {module.description}
           </p>
         </div>
-        <div className="px-10 md:px-38 mt-10 w-full md:w-[72.5%]">
+        <div className="px-10 md:px-10 lg:px-38 mt-10 w-full md:w-[72.5%]">
           <h3 className="text-[20px] md:text-[23px] tracking-[-0.035em] font-semibold">
             Overview and Purpose
           </h3>
@@ -84,7 +84,7 @@ const Course = () => {
             {module.overview_text}
           </p>
         </div>
-        <div className="px-10 md:px-38 mt-10 w-full md:w-[72.5%]">
+        <div className="px-10 md:px-10 lg:px-38 mt-10 w-full md:w-[72.5%]">
           <h3 className="text-[20px] md:text-[23px] tracking-[-0.035em] font-semibold">
             Learning Outcomes
           </h3>

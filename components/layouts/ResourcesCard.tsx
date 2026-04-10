@@ -28,9 +28,11 @@ export const ResourcesCard = ({
   return (
     <Link
       href={`/course/${code}`}
-      className="rounded-xl w-full max-w-65 md:max-w-100 lg:max-w-100 h-98 md:h-108.75 px-4.5 md:px-5.5 py-4.25 flex flex-col items-center shadow-[0px_0px_10px_rgba(0,0,0,0.28)] group cursor-pointer"
+      className="rounded-xl w-65 flex-shrink-0 md:w-full md:max-w-[360px] lg:max-w-100 mx-auto px-4.5 md:px-5.5 py-4.25 flex flex-col items-center shadow-[0px_0px_10px_rgba(0,0,0,0.28)] group cursor-pointer
+      
+    "
     >
-      <div className="relative h-37 lg:h-52 w-full md:w-full lg:w-full rounded-lg overflow-hidden">
+      <div className="relative h-37 md:h-44 lg:h-52 w-full rounded-lg overflow-hidden">
         <Image
           src={image}
           alt="image"
@@ -68,7 +70,7 @@ export const ResourcesCard = ({
       <p className="w-full text-[14px] text-black/80 mt-1.75 leading-4.25 px-1.75 line-clamp-3">
         {description}
       </p>
-      <div className="flex justify-between w-full mt-[25px] px-1.75 pl-2">
+      <div className="flex justify-between w-full mt-auto pt-4 px-1.75 pl-2">
         <div className="flex gap-1 items-center mt-0.25">
           <Image
             src={clockImg}

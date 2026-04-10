@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const ResourcesFooter = () => {
   return (
-    <div className="w-full overflow-hidden h-[128px] md:h-[73px] pl-[35px] md:pl-[151px] pb-5 md:pb-0.5 bg-[#303030] flex flex-col md:flex-row items-center justify-between text-white text-[11.75px] pr-[40px] md:pr-[169.5px] tracking-wider font-extralight">
+    <div className="w-full overflow-hidden h-[128px] md:h-[73px] pl-[35px] md:pl-10 lg:pl-[151px] pb-5 md:pb-0.5 bg-[#303030] flex flex-col md:flex-row items-center justify-between text-white text-[11.75px] pr-[40px] md:pr-10 lg:pr-[169.5px] tracking-wider font-extralight">
       <Image
         src={heraldFooterLogo}
         alt="herald-college-logo"

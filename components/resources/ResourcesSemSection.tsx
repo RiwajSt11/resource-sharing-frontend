@@ -1,4 +1,4 @@
-"use-client"
+"use-client";
 
 import { ResourcesSemLayout } from "@/components/layouts/ResourcesSemLayout";
 import searchImg from "@/public/Landing/search.svg";
@@ -43,7 +43,7 @@ export const ResourcesSemSection = ({
     <div>
       <div className="flex flex-col-reverse md:flex-row justify-between items-start md:items-center px-2 md:px-2.75">
         <div className="flex flex-col items-start mb-0">
-          <h1 className="text-[30px] md:text-[54.75px] font-extrabold tracking-tight scale-y-77 origin-top text-primary leading-12 pl-0.25">
+          <h1 className="text-[30px] md:text-[54.75px] font-extrabold tracking-tight scale-y-88 origin-top text-primary leading-13 pl-0.25">
             Resources
           </h1>
           <p className="leading-0 text-[18px] text-black/40 pl-1 tracking-tight">
@@ -85,7 +85,7 @@ export const ResourcesSemSection = ({
           <ResourcesSemLayout
             search={search}
             level={level}
-            sem={1}
+            sem={level === 4 ? 1 : 3}
             modules={modules}
             loading={loading}
           />
@@ -99,7 +99,7 @@ export const ResourcesSemSection = ({
           <ResourcesSemLayout
             search={search}
             level={level}
-            sem={2}
+            sem={level === 4 ? 2 : 4}
             modules={modules}
             loading={loading}
           />

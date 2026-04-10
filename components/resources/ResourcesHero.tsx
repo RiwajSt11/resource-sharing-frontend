@@ -56,7 +56,7 @@ export const ResourcesHero = () => {
             key={i}
             src={img}
             alt={`slide-${i}`}
-            className=" h-full object-cover "
+            className="w-full min-w-full h-full object-cover"
           />
         ))}
       </div>
