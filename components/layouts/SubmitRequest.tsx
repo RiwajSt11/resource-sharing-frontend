@@ -46,6 +46,7 @@ export const SubmitRequest = ({ submitOpen, setSubmitOpen }: Props) => {
       [e.target.name]: e.target.value,
     });
   };
+  //category handle
   const handleCategoryChange = (category: string) => {
     if (formData.module === category) {
       setFormData({
