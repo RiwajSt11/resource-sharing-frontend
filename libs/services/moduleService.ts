@@ -54,4 +54,13 @@ const postRequest = async (requestData: {
   }
 };
 
-export { getModules, getModuleByCode, postRequest };
+const createModule = async (payload: object) => {
+  const response = await api.post("/modules", payload);
+  return response.data;
+};
+const createWeek = async (moduleId: string, payload: object) => {
+  const response = await api.post(`/modules/${moduleId}/weeks`, payload);
+  return response.data;
+};
+
+export { getModules, getModuleByCode, postRequest, createModule, createWeek };

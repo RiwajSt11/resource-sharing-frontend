@@ -34,7 +34,7 @@ export const ResourcesCard = ({
     >
       <div className="relative h-37 md:h-44 lg:h-52 w-full rounded-lg overflow-hidden">
         <Image
-          src={image}
+          src={image || "/default"}
           alt="image"
           fill
           className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-120"
