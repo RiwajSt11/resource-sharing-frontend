@@ -56,6 +56,9 @@ export default function CreateModulePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [heroImageFile, setHeroImageFile] = useState<File | null>(null);
+  const [peoplePhotosFiles, setPeoplePhotosFiles] = useState<File[]>([]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -115,15 +118,27 @@ export default function CreateModulePage() {
 
     setLoading(true);
     try {
-      await createModule({
-        ...form,
-        level: parseInt(form.level),
-        parent_id: form.parent_id || null,
-        learning_outcomes: form.learning_outcomes.filter(Boolean),
-        people_photos: form.people_photos.filter(Boolean),
+      const fd = new FormData();
+      Object.entries(form).forEach(([key, val]) => {
+        if (key === "learning_outcomes" || key === "people_photos") {
+          (val as string[]).filter(Boolean).forEach((v) => fd.append(key, v));
+        } else if (val !== null && val !== undefined && val !== "") {
+          fd.append(key, String(val));
+        }
       });
+      if (form.parent_id === "") fd.delete("parent_id");
+      if (imageFile) fd.append("image_url", imageFile);
+      if (heroImageFile) fd.append("hero_image_url", heroImageFile);
+      if (peoplePhotosFiles.length > 0) {
+        peoplePhotosFiles.forEach((file) => fd.append("people_photos", file));
+      }
+
+      await createModule(fd);
       setSuccess(true);
       setForm(initialForm);
+      setImageFile(null);
+      setHeroImageFile(null);
+      setPeoplePhotosFiles([]);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Failed to create module.");
     } finally {
@@ -302,23 +317,68 @@ export default function CreateModulePage() {
           <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">
             Media
           </h2>
-          <div className="space-y-4">
-            <Field label="Image URL">
-              <input
-                name="image_url"
-                value={form.image_url}
-                onChange={handleChange}
-                placeholder="https://..."
-              />
-            </Field>
-            <Field label="Hero Image URL">
-              <input
-                name="hero_image_url"
-                value={form.hero_image_url}
-                onChange={handleChange}
-                placeholder="https://..."
-              />
-            </Field>
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Image Column */}
+              <div className="space-y-3">
+                <Field label="Main Image URL (or upload below)">
+                  <input
+                    name="image_url"
+                    value={form.image_url}
+                    onChange={handleChange}
+                    placeholder="https://..."
+                  />
+                </Field>
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 text-center relative hover:bg-gray-100 hover:border-gray-400 transition-colors group">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    title="Upload Main Image"
+                  />
+                  <div className="pointer-events-none">
+                    <p className="text-sm font-medium text-gray-700">Upload Main Image</p>
+                    <p className="text-xs text-gray-400 mt-1">Drag & Drop or Click to browse</p>
+                    {imageFile && (
+                      <p className="text-xs font-semibold text-emerald-600 mt-3 bg-emerald-50 py-1 rounded inline-block px-3">
+                        {imageFile.name}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Hero Image Column */}
+              <div className="space-y-3">
+                <Field label="Hero Image URL (or upload below)">
+                  <input
+                    name="hero_image_url"
+                    value={form.hero_image_url}
+                    onChange={handleChange}
+                    placeholder="https://..."
+                  />
+                </Field>
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 text-center relative hover:bg-gray-100 hover:border-gray-400 transition-colors group">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setHeroImageFile(e.target.files?.[0] || null)}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    title="Upload Hero Image"
+                  />
+                  <div className="pointer-events-none">
+                    <p className="text-sm font-medium text-gray-700">Upload Hero Image</p>
+                    <p className="text-xs text-gray-400 mt-1">Drag & Drop or Click to browse</p>
+                    {heroImageFile && (
+                      <p className="text-xs font-semibold text-emerald-600 mt-3 bg-emerald-50 py-1 rounded inline-block px-3">
+                        {heroImageFile.name}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -366,33 +426,58 @@ export default function CreateModulePage() {
           <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">
             People Photos
           </h2>
-          <div className="space-y-2">
-            {form.people_photos.map((item, i) => (
-              <div key={i} className="flex gap-2">
-                <input
-                  className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-400"
-                  value={item}
-                  onChange={(e) =>
-                    handleArrayChange("people_photos", i, e.target.value)
-                  }
-                  placeholder={`Photo URL ${i + 1}`}
-                />
-                <button
-                  type="button"
-                  onClick={() => removeItem("people_photos", i)}
-                  className="text-gray-400 hover:text-gray-600 px-2 text-lg leading-none"
-                >
-                  ×
-                </button>
+          <div className="space-y-6">
+            <div className="space-y-2">
+              {(form.people_photos ?? [""]).map((item, i) => (
+                <div key={i} className="flex gap-2">
+                  <input
+                    className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-400"
+                    value={item}
+                    onChange={(e) =>
+                      handleArrayChange("people_photos", i, e.target.value)
+                    }
+                    placeholder={`Photo URL ${i + 1}`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeItem("people_photos", i)}
+                    className="text-gray-400 hover:text-gray-600 px-2 text-lg leading-none"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => addItem("people_photos")}
+                className="text-sm text-gray-500 hover:text-gray-700 mt-1"
+              >
+                + Add photo URL
+              </button>
+            </div>
+
+            {/* People Photos File Upload Box */}
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 text-center relative hover:bg-gray-100 hover:border-gray-400 transition-colors group">
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={(e) => setPeoplePhotosFiles(Array.from(e.target.files || []))}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                title="Upload People Photos"
+              />
+              <div className="pointer-events-none">
+                <p className="text-sm font-medium text-gray-700">Upload Team / People Photos</p>
+                <p className="text-xs text-gray-400 mt-1">Select multiple files from your computer</p>
+                {peoplePhotosFiles.length > 0 && (
+                  <div className="mt-3">
+                    <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 py-1 px-3 rounded inline-block">
+                      Selected {peoplePhotosFiles.length} file{peoplePhotosFiles.length !== 1 ? "s" : ""}
+                    </span>
+                  </div>
+                )}
               </div>
-            ))}
-            <button
-              type="button"
-              onClick={() => addItem("people_photos")}
-              className="text-sm text-gray-500 hover:text-gray-700 mt-1"
-            >
-              + Add photo
-            </button>
+            </div>
           </div>
         </section>
 
