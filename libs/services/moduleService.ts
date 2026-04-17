@@ -1,3 +1,4 @@
+import { Module } from "@/types/Module";
 import api from "../axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -29,6 +30,18 @@ const getModuleByCode = async (code: string) => {
     return data;
   } catch (error) {
     console.error("Error fetching module by code:", error);
+  }
+};
+const getModuleById = async (id: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/modules/by-id/${id}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch module by ID");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching module by ID:", error);
   }
 };
 
@@ -63,4 +76,43 @@ const createWeek = async (moduleId: string, payload: object) => {
   return response.data;
 };
 
-export { getModules, getModuleByCode, postRequest, createModule, createWeek };
+const deleteModule = async (id: string) => {
+  const response = await api.delete(`/modules/by-id/${id}`);
+  return response.data;
+};
+
+const getWeeksByModuleId = async (moduleId: string) => {
+  try {
+    const response = await fetch(`${BASE_URL}/modules/${moduleId}/weeks-list`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch weeks");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching weeks:", error);
+  }
+};
+
+const updateWeek = async (moduleId: string, weekId: string, payload: object) => {
+  const response = await api.put(`/modules/${moduleId}/weeks/${weekId}`, payload);
+  return response.data;
+};
+
+const deleteWeek = async (moduleId: string, weekId: string) => {
+  const response = await api.delete(`/modules/${moduleId}/weeks/${weekId}`);
+  return response.data;
+};
+
+export {
+  getModules,
+  getModuleByCode,
+  getModuleById,
+  postRequest,
+  createModule,
+  createWeek,
+  deleteModule,
+  getWeeksByModuleId,
+  updateWeek,
+  deleteWeek,
+};

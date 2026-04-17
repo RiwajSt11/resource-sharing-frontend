@@ -22,8 +22,8 @@ export const RecentlyAddedLayout = ({ modules, loading }: Props) => {
   const filteredModules = [...modules]
   .sort(
     (a, b) =>
-      new Date(b.updatedAt).getTime() -
-      new Date(a.updatedAt).getTime()
+      (b.updatedAt ? new Date(b.updatedAt).getTime() : 0) -
+      (a.updatedAt ? new Date(a.updatedAt).getTime() : 0)
   )
   .slice(0, 3);
   return (

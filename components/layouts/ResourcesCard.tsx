@@ -28,7 +28,7 @@ export const ResourcesCard = ({
   return (
     <Link
       href={`/course/${code}`}
-      className="rounded-xl w-65 flex-shrink-0 md:w-full md:max-w-[360px] lg:max-w-100 mx-auto px-4.5 md:px-5.5 py-4.25 flex flex-col items-center shadow-[0px_0px_10px_rgba(0,0,0,0.28)] group cursor-pointer
+      className="rounded-xl w-65 shrink-0 md:w-full md:max-w-[360px] lg:max-w-100 h-full mx-auto px-4.5 md:px-5.5 py-4.25 flex flex-col items-center shadow-[0px_0px_10px_rgba(0,0,0,0.28)] group cursor-pointer
       
     "
     >

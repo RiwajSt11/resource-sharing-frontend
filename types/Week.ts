@@ -1,4 +1,5 @@
 export interface Week {
+  _id?: string;
   code: string;
   number: number;
   title: string;

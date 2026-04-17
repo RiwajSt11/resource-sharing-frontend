@@ -1,6 +1,7 @@
 "use client";
 
 import { createModule } from "@/libs/services/moduleService";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface ModuleForm {
@@ -43,23 +44,45 @@ const initialForm: ModuleForm = {
   people_photos: [""],
 };
 
+const semestersByLevel: Record<string, string[]> = {
+  "4": ["1", "2"],
+  "5": ["3", "4"],
+  "6": ["5", "6"],
+};
+
 export default function CreateModulePage() {
+  const router = useRouter();
   const [form, setForm] = useState<ModuleForm>(initialForm);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = e.target;
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    if (name === "level") {
+      const semesters = semestersByLevel[value] || ["1", "2"];
+      setForm((f) => ({
+        ...f,
+        level: value as ModuleForm["level"],
+        semester: (semesters.includes(f.semester) ? f.semester : semesters[0]) as ModuleForm["semester"],
+      }));
+    } else {
+      setForm({
+        ...form,
+        [name]: value,
+      });
+    }
   };
 
-  const handleArrayChange = (field: "learning_outcomes" | "people_photos", index: number, value: string) => {
+  const handleArrayChange = (
+    field: "learning_outcomes" | "people_photos",
+    index: number,
+    value: string,
+  ) => {
     setForm((f) => {
       const arr = [...f[field]];
       arr[index] = value;
@@ -70,7 +93,10 @@ export default function CreateModulePage() {
   const addItem = (field: "learning_outcomes" | "people_photos") =>
     setForm((f) => ({ ...f, [field]: [...f[field], ""] }));
 
-  const removeItem = (field: "learning_outcomes" | "people_photos", index: number) =>
+  const removeItem = (
+    field: "learning_outcomes" | "people_photos",
+    index: number,
+  ) =>
     setForm((f) => {
       const arr = [...f[field]];
       arr.splice(index, 1);
@@ -103,13 +129,16 @@ export default function CreateModulePage() {
     } finally {
       setLoading(false);
     }
+    router.push("/admin");
   };
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <div className="mb-8">
         <h1 className="text-xl font-semibold text-gray-900">Create Module</h1>
-        <p className="text-sm text-gray-500 mt-1">Add a new module to the system.</p>
+        <p className="text-sm text-gray-500 mt-1">
+          Add a new module to the system.
+        </p>
       </div>
 
       {error && (
@@ -126,31 +155,63 @@ export default function CreateModulePage() {
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Core Info */}
         <section>
-          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Core Info</h2>
+          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">
+            Core Info
+          </h2>
           <div className="grid grid-cols-2 gap-4">
             <Field label="Name *">
-              <input name="name" value={form.name} onChange={handleChange} required placeholder="Introduction to Computing" />
+              <input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+                placeholder="Introduction to Computing"
+              />
             </Field>
             <Field label="Code *">
-              <input name="code" value={form.code} onChange={handleChange} required placeholder="CS101" />
+              <input
+                name="code"
+                value={form.code}
+                onChange={handleChange}
+                required
+                placeholder="CS101"
+              />
             </Field>
             <Field label="Course">
-              <input name="course" value={form.course} onChange={handleChange} placeholder="Course name" />
+              <input
+                name="course"
+                value={form.course}
+                onChange={handleChange}
+                placeholder="Course name"
+              />
             </Field>
             <Field label="Course Code">
-              <input name="course_code" value={form.course_code} onChange={handleChange} placeholder="BSC-CS" />
+              <input
+                name="course_code"
+                value={form.course_code}
+                onChange={handleChange}
+                placeholder="BSC-CS"
+              />
             </Field>
             <Field label="Level *">
               <select name="level" value={form.level} onChange={handleChange}>
                 {(["4", "5", "6"] as const).map((l) => (
-                  <option key={l} value={l}>Level {l}</option>
+                  <option key={l} value={l}>
+                    Level {l}
+                  </option>
                 ))}
               </select>
             </Field>
             <Field label="Semester">
-              <select name="semester" value={form.semester} onChange={handleChange}>
-                {(["1","2","3","4","5","6"] as const).map((s) => (
-                  <option key={s} value={s}>Semester {s}</option>
+              <select
+                name="semester"
+                value={form.semester}
+                onChange={handleChange}
+              >
+                {(semestersByLevel[form.level] || ["1", "2"]).map((s) => (
+                  <option key={s} value={s}>
+                    Semester {s}
+                  </option>
                 ))}
               </select>
             </Field>
@@ -161,13 +222,28 @@ export default function CreateModulePage() {
               </select>
             </Field>
             <Field label="Time Label">
-              <input name="time_label" value={form.time_label} onChange={handleChange} placeholder="12 weeks" />
+              <input
+                name="time_label"
+                value={form.time_label}
+                onChange={handleChange}
+                placeholder="12 weeks"
+              />
             </Field>
             <Field label="Instructor Email" className="col-span-2">
-              <input name="instructor_email" value={form.instructor_email} onChange={handleChange} placeholder="instructor@university.edu" />
+              <input
+                name="instructor_email"
+                value={form.instructor_email}
+                onChange={handleChange}
+                placeholder="instructor@university.edu"
+              />
             </Field>
             <Field label="Parent Module ID" className="col-span-2">
-              <input name="parent_id" value={form.parent_id} onChange={handleChange} placeholder="UUID (optional)" />
+              <input
+                name="parent_id"
+                value={form.parent_id}
+                onChange={handleChange}
+                placeholder="UUID (optional)"
+              />
             </Field>
           </div>
         </section>
@@ -176,9 +252,17 @@ export default function CreateModulePage() {
 
         {/* Description */}
         <section>
-          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Description</h2>
+          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">
+            Description
+          </h2>
           <Field label="Description">
-            <textarea name="description" value={form.description} onChange={handleChange} rows={3} placeholder="Short module description..." />
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              rows={3}
+              placeholder="Short module description..."
+            />
           </Field>
         </section>
 
@@ -186,13 +270,27 @@ export default function CreateModulePage() {
 
         {/* Content */}
         <section>
-          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Content</h2>
+          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">
+            Content
+          </h2>
           <div className="space-y-4">
             <Field label="Welcome Text">
-              <textarea name="welcome_text" value={form.welcome_text} onChange={handleChange} rows={3} placeholder="Welcome message..." />
+              <textarea
+                name="welcome_text"
+                value={form.welcome_text}
+                onChange={handleChange}
+                rows={3}
+                placeholder="Welcome message..."
+              />
             </Field>
             <Field label="Overview Text">
-              <textarea name="overview_text" value={form.overview_text} onChange={handleChange} rows={4} placeholder="Full module overview..." />
+              <textarea
+                name="overview_text"
+                value={form.overview_text}
+                onChange={handleChange}
+                rows={4}
+                placeholder="Full module overview..."
+              />
             </Field>
           </div>
         </section>
@@ -201,13 +299,25 @@ export default function CreateModulePage() {
 
         {/* Media */}
         <section>
-          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Media</h2>
+          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">
+            Media
+          </h2>
           <div className="space-y-4">
             <Field label="Image URL">
-              <input name="image_url" value={form.image_url} onChange={handleChange} placeholder="https://..." />
+              <input
+                name="image_url"
+                value={form.image_url}
+                onChange={handleChange}
+                placeholder="https://..."
+              />
             </Field>
             <Field label="Hero Image URL">
-              <input name="hero_image_url" value={form.hero_image_url} onChange={handleChange} placeholder="https://..." />
+              <input
+                name="hero_image_url"
+                value={form.hero_image_url}
+                onChange={handleChange}
+                placeholder="https://..."
+              />
             </Field>
           </div>
         </section>
@@ -216,20 +326,34 @@ export default function CreateModulePage() {
 
         {/* Learning Outcomes */}
         <section>
-          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Learning Outcomes</h2>
+          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">
+            Learning Outcomes
+          </h2>
           <div className="space-y-2">
             {form.learning_outcomes.map((item, i) => (
               <div key={i} className="flex gap-2">
                 <input
                   className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-400"
                   value={item}
-                  onChange={(e) => handleArrayChange("learning_outcomes", i, e.target.value)}
+                  onChange={(e) =>
+                    handleArrayChange("learning_outcomes", i, e.target.value)
+                  }
                   placeholder={`Outcome ${i + 1}`}
                 />
-                <button type="button" onClick={() => removeItem("learning_outcomes", i)} className="text-gray-400 hover:text-gray-600 px-2 text-lg leading-none">×</button>
+                <button
+                  type="button"
+                  onClick={() => removeItem("learning_outcomes", i)}
+                  className="text-gray-400 hover:text-gray-600 px-2 text-lg leading-none"
+                >
+                  ×
+                </button>
               </div>
             ))}
-            <button type="button" onClick={() => addItem("learning_outcomes")} className="text-sm text-gray-500 hover:text-gray-700 mt-1">
+            <button
+              type="button"
+              onClick={() => addItem("learning_outcomes")}
+              className="text-sm text-gray-500 hover:text-gray-700 mt-1"
+            >
               + Add outcome
             </button>
           </div>
@@ -239,20 +363,34 @@ export default function CreateModulePage() {
 
         {/* People Photos */}
         <section>
-          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">People Photos</h2>
+          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">
+            People Photos
+          </h2>
           <div className="space-y-2">
             {form.people_photos.map((item, i) => (
               <div key={i} className="flex gap-2">
                 <input
                   className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-400"
                   value={item}
-                  onChange={(e) => handleArrayChange("people_photos", i, e.target.value)}
+                  onChange={(e) =>
+                    handleArrayChange("people_photos", i, e.target.value)
+                  }
                   placeholder={`Photo URL ${i + 1}`}
                 />
-                <button type="button" onClick={() => removeItem("people_photos", i)} className="text-gray-400 hover:text-gray-600 px-2 text-lg leading-none">×</button>
+                <button
+                  type="button"
+                  onClick={() => removeItem("people_photos", i)}
+                  className="text-gray-400 hover:text-gray-600 px-2 text-lg leading-none"
+                >
+                  ×
+                </button>
               </div>
             ))}
-            <button type="button" onClick={() => addItem("people_photos")} className="text-sm text-gray-500 hover:text-gray-700 mt-1">
+            <button
+              type="button"
+              onClick={() => addItem("people_photos")}
+              className="text-sm text-gray-500 hover:text-gray-700 mt-1"
+            >
               + Add photo
             </button>
           </div>
@@ -264,14 +402,14 @@ export default function CreateModulePage() {
           <button
             type="button"
             onClick={() => setForm(initialForm)}
-            className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700"
+            className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
           >
             Reset
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="px-5 py-2 text-sm bg-gray-900 text-white rounded hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-5 py-2 text-sm bg-gray-900 text-white rounded hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {loading ? "Creating..." : "Create Module"}
           </button>
@@ -295,7 +433,9 @@ function Field({
       <label className="block text-xs text-gray-500 mb-1">{label}</label>
       {/* Clone child to inject shared input classes */}
       {(() => {
-        const child = children as React.ReactElement<React.HTMLProps<HTMLElement>>;
+        const child = children as React.ReactElement<
+          React.HTMLProps<HTMLElement>
+        >;
         const tag = child.type as string;
         const base =
           "w-full border border-gray-200 rounded px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-400 bg-white";
