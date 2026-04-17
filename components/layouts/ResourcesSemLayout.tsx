@@ -46,11 +46,10 @@ export const ResourcesSemLayout = ({
         module.name.toLowerCase().includes(search.toLowerCase()) ||
         module.code.toLowerCase().includes(search.toLowerCase()),
     );
-    
+
   return (
     <>
       {filteredModules.length > 0 ? (
-       
         filteredModules.map((module, index) => (
           <div key={index} className="snap-center">
             <ResourcesCard
@@ -61,6 +60,7 @@ export const ResourcesSemLayout = ({
               description={module.description}
               time={module.time_label}
               image={module.image_url}
+              people_photos={module.people_photos || []}
             />
           </div>
         ))

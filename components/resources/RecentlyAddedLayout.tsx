@@ -39,6 +39,7 @@ export const RecentlyAddedLayout = ({ modules, loading }: Props) => {
               description={module.description}
               time={module.time_label}
               image={module.image_url}
+              people_photos={module.people_photos || []}
             />
           </div>
         ))
