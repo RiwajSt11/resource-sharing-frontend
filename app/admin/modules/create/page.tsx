@@ -139,12 +139,12 @@ export default function CreateModulePage() {
       setImageFile(null);
       setHeroImageFile(null);
       setPeoplePhotosFiles([]);
+      router.push("/admin");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Failed to create module.");
     } finally {
       setLoading(false);
     }
-    router.push("/admin");
   };
 
   return (

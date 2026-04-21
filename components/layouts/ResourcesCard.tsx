@@ -87,17 +87,23 @@ export const ResourcesCard = ({
           <Image
             src={people_photos[0] || circle}
             alt="circle-img"
-            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-20 right-0"
+            width={24}
+            height={24}
+            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-20 right-0 object-cover rounded-full"
           />
           <Image
             src={people_photos[1] || circle}
             alt="circle-img"
-            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-10 right-4 transition-all ease-in-out duration-500 group-hover:right-6.5"
+            width={24}
+            height={24}
+            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-10 right-4 transition-all ease-in-out duration-500 group-hover:right-6.5 object-cover rounded-full"
           />
           <Image
             src={people_photos[2] || circle}
             alt="circle-img"
-            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-0 right-8 transition-all ease-in-out duration-500 group-hover:right-13"
+            width={24}
+            height={24}
+            className="w-4.5 md:w-6 h-4.5 md:h-6 absolute z-0 right-8 transition-all ease-in-out duration-500 group-hover:right-13 object-cover rounded-full"
           />
         </div>
       </div>
